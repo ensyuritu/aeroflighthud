@@ -46,7 +46,7 @@ public class HudRenderer {
         if(player == null) return;
         if(player.getVehicle() == null) return;
 
-        SubLevel currentSubLevel = null;
+        SubLevel currentSubLevel;
 
         GuiGraphics graphics = event.getGuiGraphics();
         Font font = mc.font;
@@ -68,9 +68,6 @@ public class HudRenderer {
                     double velX = pos.x - lastPos.x();
                     double velY = pos.y - lastPos.y();
                     double velZ = pos.z - lastPos.z();
-
-                    double speedBlocksPerSecond = Math.sqrt(velX * velX + velY * velY + velZ * velZ) * 20.0;
-                    double speedKmh = speedBlocksPerSecond * 3.6;
 
                     Quaterniond quaternion = new Quaterniond(currentPose.orientation());
 
@@ -301,7 +298,6 @@ public class HudRenderer {
                     }
 
                     //PitchLadder Draw
-                    final int hudColorPitchZero = 0xFF00FFFF;
 
                     Vector3d playerGlobalRotationEulerAngles = new Vector3d();
                     playerGlobalRotation.getEulerAnglesYXZ(playerGlobalRotationEulerAngles);
