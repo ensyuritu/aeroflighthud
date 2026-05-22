@@ -44,6 +44,7 @@ public class HudRenderer {
 
         Player player = mc.player;
         if(player == null) return;
+        if(player.getVehicle() == null) return;
 
         SubLevel currentSubLevel = null;
 
