@@ -1,0 +1,11 @@
+{
+  "key.categories.aeroflighthud.aeroflighthud": "AeroFlightHUD",
+  "key.aeroflighthud.toggle_hud_visible": "HUD表示切り替え",
+  "key.aeroflighthud.calibration": "キャリブレーション",
+  "text.aeroflighthud.calibrate_positive_x": "PositiveX方向にキャリブレーションしました",
+  "text.aeroflighthud.calibrate_positive_z": "PositiveZ方向にキャリブレーションしました",
+  "text.aeroflighthud.calibrate_negative_x": "NegativeX方向にキャリブレーションしました",
+  "text.aeroflighthud.calibrate_negative_z": "NegativeZ方向にキャリブレーションしました",
+  "text.aeroflighthud.hud_visible": "AeroFlightHUD: 表示",
+  "text.aeroflighthud.hud_hidden": "AeroFlightHUD: 非表示"
+}

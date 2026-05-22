@@ -1,0 +1,11 @@
+{
+  "key.categories.aeroflighthud.aeroflighthud": "AeroFlightHUD",
+  "key.aeroflighthud.toggle_hud_visible": "Toggle HUD",
+  "key.aeroflighthud.calibration": "Calibration",
+  "text.aeroflighthud.calibrate_positive_x": "Calibrated to PositiveX Forward",
+  "text.aeroflighthud.calibrate_positive_z": "Calibrated to PositiveZ Forward",
+  "text.aeroflighthud.calibrate_negative_x": "Calibrated to NegativeX Forward",
+  "text.aeroflighthud.calibrate_negative_z": "Calibrated to NegativeZ Forward",
+  "text.aeroflighthud.hud_visible": "AeroFlightHUD: Visible",
+  "text.aeroflighthud.hud_hidden": "AeroFlightHUD: Hidden"
+}
