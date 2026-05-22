@@ -72,20 +72,14 @@ public class HudRenderer {
                     double speedBlocksPerSecond = Math.sqrt(velX * velX + velY * velY + velZ * velZ) * 20.0;
                     double speedKmh = speedBlocksPerSecond * 3.6;
 
-
-                    String velText = String.format("Speed: %.1f km/h (Y-Vel: %.2fm/s)", speedKmh, velY * 20.0);
-
                     Quaterniond quaternion = new Quaterniond(currentPose.orientation());
 
                     var nonCalibratedEulerAngles = new org.joml.Vector3d();
                     quaternion.getEulerAnglesYXZ(nonCalibratedEulerAngles);
 
-                    double vehiclePitch = Math.toDegrees(nonCalibratedEulerAngles.x);
-                    double vehicleYaw = Math.toDegrees(nonCalibratedEulerAngles.y);
-                    double vehicleRoll = Math.toDegrees(nonCalibratedEulerAngles.z);
-
-
-
+//                    double vehiclePitch = Math.toDegrees(nonCalibratedEulerAngles.x);
+//                    double vehicleYaw = Math.toDegrees(nonCalibratedEulerAngles.y);
+//                    double vehicleRoll = Math.toDegrees(nonCalibratedEulerAngles.z);
 
                     switch(calibrationMode){
                         case NegativeZ:
@@ -103,10 +97,6 @@ public class HudRenderer {
                     //prepare variables
                     var calibratedEulerAngles = new org.joml.Vector3d();
                     quaternion.getEulerAnglesYXZ(calibratedEulerAngles);
-                    double displayPitch = Math.toDegrees(calibratedEulerAngles.x);
-                    double displayYaw = Math.toDegrees(calibratedEulerAngles.y);
-                    double displayRoll = Math.toDegrees(calibratedEulerAngles.z);
-//                    String rotText = String.format("Pitch: %.1f / Yaw: %.1f / Roll: %.1f", displayPitch, displayYaw, displayRoll);
 
                     int guiWidth = graphics.guiWidth();
                     int guiHeight = graphics.guiHeight();
@@ -118,21 +108,13 @@ public class HudRenderer {
                     //double windowAspect = (double)windowWidth / windowHeight;
                     double vFov = mc.options.fov().get() * mc.player.getFieldOfViewModifier();
                     double hFovGui = Math.toDegrees(2 * Math.atan(Math.tan(Math.toRadians(vFov) / 2) * guiAspect));
-                    //double hFovWindow = Math.toDegrees(2 * Math.atan(Math.tan(Math.toRadians(vFov) / 2) * windowAspect));
                     float rawPlayerYaw = player.getYRot();
                     float playerLocalYaw = rawPlayerYaw % 360;
                     if(playerLocalYaw <= 0) playerLocalYaw += 360;
                     if(playerLocalYaw > 180) playerLocalYaw -= 360;
-                    //playerLocalYaw -= 180;
                     float playerLocalPitch = -player.getXRot();
 
 
-
-                    //Draw Debug Info
-                    int textColor = 0xFFFFFFFF;
-                    int textYPos = 10;
-
-                    //graphics.drawString(font, String.format(""), 10, 10, textColor, true);
                     //Draw Flight HUD
                     int hudColor = 0xFF00FF00;
 
@@ -160,7 +142,6 @@ public class HudRenderer {
                         int hudBoresightScreenPosY = (int)(guiCenter.y - rawHudBoresightPosY * guiCenter.y);
 
                         //draw
-                        //graphics.fill(hudBoresightScreenPosX -1, hudBoresightScreenPosY -1, hudBoresightScreenPosX +1, hudBoresightScreenPosY +1, hudColor);
                         graphics.hLine(hudBoresightScreenPosX -10, hudBoresightScreenPosX -5, hudBoresightScreenPosY, hudColor);
                         graphics.hLine(hudBoresightScreenPosX +5, hudBoresightScreenPosX +10, hudBoresightScreenPosY, hudColor);
                     }
@@ -187,8 +168,6 @@ public class HudRenderer {
                         graphics.vLine(hudVelocityVectorPosX, hudVelocityVectorPosY -5, hudVelocityVectorPosY -2, hudColor);
                         graphics.hLine(hudVelocityVectorPosX -5, hudVelocityVectorPosX -2, hudVelocityVectorPosY, hudColor);
                         graphics.hLine(hudVelocityVectorPosX +2, hudVelocityVectorPosX +5, hudVelocityVectorPosY, hudColor);
-
-//                        graphics.fill(hudVelocityVectorPosX -1, hudVelocityVectorPosY -1, hudVelocityVectorPosX +1, hudVelocityVectorPosY +1, hudColor);
 
                     }
 
@@ -295,7 +274,6 @@ public class HudRenderer {
 
                     Vector3d headingPitchZero = new Vector3d(0, 0, 1);
                     headingPitchZero.rotateY(playerGlobalHeadingYawRad);
-                    //headingPitchZero.rotateY(Math.toRadians(-vehicleYaw));
                     headingPitchZero.rotate(invertedVehicleRotation);
                     headingPitchZero.rotateY(Math.toRadians(playerLocalYaw));
                     headingPitchZero.rotateX(Math.toRadians(playerLocalPitch));
@@ -308,7 +286,6 @@ public class HudRenderer {
                         headingPitchUp[i] = new Vector3d(0, 0, 1);
                         headingPitchUp[i].rotateX(-Math.toRadians((i + 1) * ladderStepDegrees));
                         headingPitchUp[i].rotateY(playerGlobalHeadingYawRad);
-                        //headingPitchUp[i].rotateY(Math.toRadians(-vehicleYaw));
                         headingPitchUp[i].rotate(invertedVehicleRotation);
                         headingPitchUp[i].rotateY(Math.toRadians(playerLocalYaw));
                         headingPitchUp[i].rotateX(Math.toRadians(playerLocalPitch));
@@ -316,7 +293,6 @@ public class HudRenderer {
                         headingPitchDown[i] = new Vector3d(0, 0, 1);
                         headingPitchDown[i].rotateX(Math.toRadians((i + 1) * ladderStepDegrees));
                         headingPitchDown[i].rotateY(playerGlobalHeadingYawRad);
-                        //headingPitchDown[i].rotateY(Math.toRadians(-vehicleYaw));
                         headingPitchDown[i].rotate(invertedVehicleRotation);
                         headingPitchDown[i].rotateY(Math.toRadians(playerLocalYaw));
                         headingPitchDown[i].rotateX(Math.toRadians(playerLocalPitch));
@@ -330,10 +306,7 @@ public class HudRenderer {
                     Vector3d playerGlobalRotationEulerAngles = new Vector3d();
                     playerGlobalRotation.getEulerAnglesYXZ(playerGlobalRotationEulerAngles);
                     float playerEyeRollRad = (float) -playerGlobalRotationEulerAngles.z;
-//                    graphics.drawString(font, String.format(
-//                                    "playerRoll: %.5f", Math.toDegrees(playerEyeRollRad)),
-//                            10, textYPos, textColor, true);
-//                    textYPos += 12;
+
                     //PitchZero
                     double rawHudHeadingPitchZeroPosX = headingPitchZero.x / (headingPitchZero.z * Math.tan(Math.toRadians(hFovGui) / 2));
                     double rawHudHeadingPitchZeroPosY = headingPitchZero.y / (headingPitchZero.z * Math.tan(Math.toRadians(vFov) / 2));
@@ -568,12 +541,6 @@ public class HudRenderer {
 
     private static void drawFont(GuiGraphics graphics, String text, float x, float y, float degrees, int color, boolean dropShadow){
         Font font = Minecraft.getInstance().font;
-
-//        float textWidth = font.width(text);
-//        float textHeight = font.lineHeight;
-
-//        float centerX = x + textWidth / 2.0f;
-//        float centerY = y + textHeight / 2.0f;
 
         graphics.pose().pushPose();
 
