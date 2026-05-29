@@ -135,12 +135,43 @@ public class HudRenderer {
                     double rawHudBoresightPosY = vehicleHeadingVector.y / (vehicleHeadingVector.z * Math.tan(Math.toRadians(vFov) / 2));
 
                     if((Math.abs(rawHudBoresightPosX) < 1.0) && (Math.abs(rawHudBoresightPosY) < 1.0) && vehicleHeadingVector.z > 0.01){
-                        int hudBoresightScreenPosX = (int)(guiCenter.x - rawHudBoresightPosX * guiCenter.x);
-                        int hudBoresightScreenPosY = (int)(guiCenter.y - rawHudBoresightPosY * guiCenter.y);
+                        float hudBoresightScreenPosX = (float)(guiCenter.x - rawHudBoresightPosX * guiCenter.x);
+                        float hudBoresightScreenPosY = (float)(guiCenter.y - rawHudBoresightPosY * guiCenter.y);
 
                         //draw
-                        graphics.hLine(hudBoresightScreenPosX -10, hudBoresightScreenPosX -5, hudBoresightScreenPosY, hudColor);
-                        graphics.hLine(hudBoresightScreenPosX +5, hudBoresightScreenPosX +10, hudBoresightScreenPosY, hudColor);
+//                        graphics.hLine(hudBoresightScreenPosX -10, hudBoresightScreenPosX -5, hudBoresightScreenPosY, hudColor);
+//                        graphics.hLine(hudBoresightScreenPosX +5, hudBoresightScreenPosX +10, hudBoresightScreenPosY, hudColor);
+                        drawScalableLine(graphics,
+                                hudBoresightScreenPosX - 5.0f, hudBoresightScreenPosY,
+                                hudBoresightScreenPosX - 10.0f, hudBoresightScreenPosY,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudBoresightScreenPosX + 5.0f, hudBoresightScreenPosY,
+                                hudBoresightScreenPosX + 10.0f, hudBoresightScreenPosY,
+                                1.0f, hudColor
+                        );
+
+                        drawScalableLine(graphics,
+                                hudBoresightScreenPosX + 5.0f, hudBoresightScreenPosY,
+                                hudBoresightScreenPosX + 2.5f, hudBoresightScreenPosY + 5.0f,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudBoresightScreenPosX + 2.5f, hudBoresightScreenPosY + 5.0f,
+                                hudBoresightScreenPosX, hudBoresightScreenPosY,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudBoresightScreenPosX - 5.0f, hudBoresightScreenPosY,
+                                hudBoresightScreenPosX - 2.5f, hudBoresightScreenPosY + 5.0f,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudBoresightScreenPosX - 2.5f, hudBoresightScreenPosY + 5.0f,
+                                hudBoresightScreenPosX, hudBoresightScreenPosY,
+                                1.0f, hudColor
+                        );
                     }
 
                     //flightpathmarker
@@ -154,17 +185,48 @@ public class HudRenderer {
                         //calculate drawpoint
                         double rawHudVelocityVectorPosX = playerEyeVelocity.x / (playerEyeVelocity.z * Math.tan(Math.toRadians(hFovGui) / 2));
                         double rawHudVelocityVectorPosY = playerEyeVelocity.y / (playerEyeVelocity.z * Math.tan(Math.toRadians(vFov) / 2));
-                        int hudVelocityVectorPosX = (int)(guiCenter.x - rawHudVelocityVectorPosX * guiCenter.x);
-                        int hudVelocityVectorPosY = (int)(guiCenter.y - rawHudVelocityVectorPosY * guiCenter.y);
+                        float hudVelocityVectorPosX = (float)(guiCenter.x - rawHudVelocityVectorPosX * guiCenter.x);
+                        float hudVelocityVectorPosY = (float)(guiCenter.y - rawHudVelocityVectorPosY * guiCenter.y);
 
                         //draw
-                        graphics.hLine(hudVelocityVectorPosX -2, hudVelocityVectorPosX +2, hudVelocityVectorPosY +2, hudColor);
-                        graphics.hLine(hudVelocityVectorPosX -2, hudVelocityVectorPosX +2, hudVelocityVectorPosY -2, hudColor);
-                        graphics.vLine(hudVelocityVectorPosX -2, hudVelocityVectorPosY -2, hudVelocityVectorPosY +2, hudColor);
-                        graphics.vLine(hudVelocityVectorPosX +2, hudVelocityVectorPosY -2, hudVelocityVectorPosY +2, hudColor);
-                        graphics.vLine(hudVelocityVectorPosX, hudVelocityVectorPosY -5, hudVelocityVectorPosY -2, hudColor);
-                        graphics.hLine(hudVelocityVectorPosX -5, hudVelocityVectorPosX -2, hudVelocityVectorPosY, hudColor);
-                        graphics.hLine(hudVelocityVectorPosX +2, hudVelocityVectorPosX +5, hudVelocityVectorPosY, hudColor);
+                        //square
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX -2.0f, hudVelocityVectorPosY + 2.0f,
+                                hudVelocityVectorPosX +2.0f, hudVelocityVectorPosY + 2.0f,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX -2.0f, hudVelocityVectorPosY - 2.0f,
+                                hudVelocityVectorPosX +2.0f, hudVelocityVectorPosY - 2.0f,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX +2.0f, hudVelocityVectorPosY - 2.0f,
+                                hudVelocityVectorPosX +2.0f, hudVelocityVectorPosY + 2.0f,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX -2.0f, hudVelocityVectorPosY - 2.0f,
+                                hudVelocityVectorPosX -2.0f, hudVelocityVectorPosY + 2.0f,
+                                1.0f, hudColor
+
+                        );
+                        //three things
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX , hudVelocityVectorPosY - 2.0f,
+                                hudVelocityVectorPosX , hudVelocityVectorPosY - 5.0f,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX -2.0f, hudVelocityVectorPosY,
+                                hudVelocityVectorPosX -5.0f, hudVelocityVectorPosY,
+                                1.0f, hudColor
+                        );
+                        drawScalableLine(graphics,
+                                hudVelocityVectorPosX +2.0f, hudVelocityVectorPosY,
+                                hudVelocityVectorPosX +5.0f, hudVelocityVectorPosY,
+                                1.0f, hudColor
+                        );
 
                     }
 
@@ -435,14 +497,14 @@ public class HudRenderer {
                                     1.0f, hudColor);
 
                             drawScalableLine(graphics,
-                                    hudHeadingX - (float) Math.cos(playerEyeRollRad) * 45.0f,
-                                    hudHeadingY - (float) Math.sin(playerEyeRollRad) * 45.0f,
+                                    hudHeadingX - (float) Math.cos(playerEyeRollRad) * 55.0f,
+                                    hudHeadingY - (float) Math.sin(playerEyeRollRad) * 55.0f,
                                     hudHeadingX - (float) Math.cos(playerEyeRollRad) * 60.0f,
                                     hudHeadingY - (float) Math.sin(playerEyeRollRad) * 60.0f,
                                     1.0f, hudColor);
                             drawScalableLine(graphics,
-                                    hudHeadingX + (float) Math.cos(playerEyeRollRad) * 45.0f,
-                                    hudHeadingY + (float) Math.sin(playerEyeRollRad) * 45.0f,
+                                    hudHeadingX + (float) Math.cos(playerEyeRollRad) * 55.0f,
+                                    hudHeadingY + (float) Math.sin(playerEyeRollRad) * 55.0f,
                                     hudHeadingX + (float) Math.cos(playerEyeRollRad) * 60.0f,
                                     hudHeadingY + (float) Math.sin(playerEyeRollRad) * 60.0f,
                                     1.0f, hudColor);
@@ -509,6 +571,13 @@ public class HudRenderer {
         float halfWidth = thickness / 2.0f;
         float offsetX = nx * halfWidth;
         float offsetY = ny * halfWidth;
+        float adjustX = dx / len * halfWidth;
+        float adjustY = dy / len * halfWidth;
+
+        x1 -= adjustX;
+        y1 -= adjustY;
+        x2 += adjustX;
+        y2 += adjustY;
 
         float p1x = x1 - offsetX;
         float p1y = y1 - offsetY;
