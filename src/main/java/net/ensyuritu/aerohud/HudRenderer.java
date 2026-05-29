@@ -546,9 +546,7 @@ public class HudRenderer {
 
         graphics.pose().mulPose((new Quaternionf()).rotationZ(radians));
 
-        graphics.pose().translate(-x, -y, 0.0f);
-
-        graphics.drawString(font, text, (int) x - font.width(text) / 2, (int) y - font.lineHeight / 2, color, dropShadow);
+        graphics.drawString(font, text, - font.width(text) / 2, - font.lineHeight / 2, color, dropShadow);
 
         graphics.pose().popPose();
     }
