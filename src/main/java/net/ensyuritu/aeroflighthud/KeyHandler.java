@@ -1,13 +1,11 @@
 package net.ensyuritu.aeroflighthud;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
-import org.slf4j.Logger;
 
 @EventBusSubscriber(modid = AeroFlightHud.MODID, value = Dist.CLIENT)
 public class KeyHandler {
