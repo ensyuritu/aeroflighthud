@@ -16,7 +16,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import org.joml.*;
-import net.ensyuritu.aeroflighthud.mixin.ClientSubLevelAccessor;
 
 import java.lang.Math;
 

@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 @EventBusSubscriber(modid = AeroFlightHud.MODID, value = Dist.CLIENT)
 public class KeyHandler {
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    //private static final Logger LOGGER = LogUtils.getLogger();
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event){
