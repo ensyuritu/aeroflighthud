@@ -1,4 +1,4 @@
-package net.ensyuritu.aerohud;
+package net.ensyuritu.aeroflighthud;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;

@@ -1,8 +1,10 @@
-package net.ensyuritu.aerohud;
+package net.ensyuritu.aeroflighthud;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.ryanhcode.sable.companion.math.Pose3d;
+import dev.ryanhcode.sable.companion.math.Pose3dc;
 import dev.ryanhcode.sable.mixinterface.entity.entity_sublevel_collision.EntityMovementExtension;
+import dev.ryanhcode.sable.sublevel.ClientSubLevel;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -14,6 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import org.joml.*;
+import net.ensyuritu.aeroflighthud.mixin.ClientSubLevelAccessor;
 
 import java.lang.Math;
 
@@ -41,6 +44,7 @@ public class HudRenderer {
     public static void onRenderGui(RenderGuiEvent.Post event){
         if(!hudVisible) return;
         Minecraft mc = Minecraft.getInstance();
+        final float partialTick = mc.getTimer().getGameTimeDeltaPartialTick(true);
 
         Player player = mc.player;
         if(player == null) return;
@@ -56,20 +60,21 @@ public class HudRenderer {
         if (player instanceof EntityMovementExtension extension) {
             currentSubLevel = extension.sable$getTrackingSubLevel();
 
-            if(currentSubLevel != null){
-                Pose3d currentPose = currentSubLevel.logicalPose();
+            if(currentSubLevel instanceof ClientSubLevel clientSubLevel){
+                Pose3dc currentClientPose = clientSubLevel.renderPose(partialTick);
+                Pose3d currentPose = clientSubLevel.logicalPose();
                 var lastPose = currentSubLevel.lastPose();
 
                 if (currentPose != null && lastPose != null) {
+                    var clientPos = currentClientPose.position();
                     var pos = currentPose.position();
-                    //String posText = String.format("Aero XYZ: %.2f / %.2f / %.2f", pos.x, pos.y, pos.z);
-
                     var lastPos = lastPose.position();
-                    double velX = pos.x - lastPos.x();
-                    double velY = pos.y - lastPos.y();
-                    double velZ = pos.z - lastPos.z();
 
-                    Quaterniond quaternion = new Quaterniond(currentPose.orientation());
+                    double velX = (pos.x() - lastPos.x()) * 20.0;
+                    double velY = (pos.y() - lastPos.y()) * 20.0;
+                    double velZ = (pos.z() - lastPos.z()) * 20.0;
+
+                    Quaterniond quaternion = new Quaterniond(currentClientPose.orientation());
 
                     var nonCalibratedEulerAngles = new org.joml.Vector3d();
                     quaternion.getEulerAnglesYXZ(nonCalibratedEulerAngles);
@@ -115,7 +120,7 @@ public class HudRenderer {
                     //Draw Flight HUD
                     int hudColor = 0xFF00FF00;
 
-                    final Quaterniond vehicleRotation = new Quaterniond(currentPose.orientation());
+                    final Quaterniond vehicleRotation = new Quaterniond(currentClientPose.orientation());
                     final Quaterniond invertedVehicleRotation = new Quaterniond(vehicleRotation);
                     invertedVehicleRotation.invert();
 
@@ -242,9 +247,9 @@ public class HudRenderer {
                     //AltMeterDraw
 
                     graphics.vLine(altMeterDrawPosX, guiCenter.y - (altMeterDrawHeight / 2), guiCenter.y + (altMeterDrawHeight / 2), hudColor);
-                    graphics.drawString(font, String.format("%.0f", pos.y), altMeterDrawPosX + 8, guiCenter.y - font.lineHeight / 2, hudColor, false);
+                    graphics.drawString(font, String.format("%.0f", clientPos.y()), altMeterDrawPosX + 8, guiCenter.y - font.lineHeight / 2, hudColor, false);
 
-                    double bottomAltValue = pos.y - (((double)altMeterDrawHeight / 2) / altDiffPerPixel);
+                    double bottomAltValue = clientPos.y() - (((double)altMeterDrawHeight / 2) / altDiffPerPixel);
                     int drawAltMarkPosY = guiCenter.y + (altMeterDrawHeight / 2) + (int)Math.floor(mathMod(bottomAltValue * altDiffPerPixel, altMeterMarkGap));
                     int drawAltValue = (int)Math.floor(Math.floor(bottomAltValue) / altDiffPerMark ) * altDiffPerMark;
 
@@ -276,10 +281,10 @@ public class HudRenderer {
                     int speedDisplayDiff = speedDiffPerMark * speedDisplayPerMarks;
 
                     double speedMeterValue = switch (calibrationMode) {
-                        case NegativeZ -> (-localVelocity.z() * 20.0);
-                        case PositiveX -> (localVelocity.x() * 20.0);
-                        case PositiveZ -> (localVelocity.z() * 20.0);
-                        case NegativeX -> (-localVelocity.x() * 20.0);
+                        case NegativeZ -> (-localVelocity.z());
+                        case PositiveX -> (localVelocity.x());
+                        case PositiveZ -> (localVelocity.z());
+                        case NegativeX -> (-localVelocity.x());
                     };
 
                     String speedMeterValueString = String.format("%.1f", speedMeterValue);

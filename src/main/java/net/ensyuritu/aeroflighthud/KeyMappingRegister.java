@@ -1,4 +1,4 @@
-package net.ensyuritu.aerohud;
+package net.ensyuritu.aeroflighthud;
 
 
 import com.mojang.blaze3d.platform.InputConstants;
