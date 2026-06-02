@@ -556,12 +556,7 @@ public class HudRenderer {
         return hudVisible;
     }
 
-    private static void drawScalableLine(GuiGraphics graphics, float x1, float y1, float x2, float y2, float baseThickness, int color){
-        Minecraft mc = Minecraft.getInstance();
-
-        float guiScale = (float) mc.getWindow().getGuiScale();
-
-        float thickness = baseThickness * guiScale / 4.0f;
+    private static void drawScalableLine(GuiGraphics graphics, float x1, float y1, float x2, float y2, float thickness, int color){
 
         float dx = x2 - x1;
         float dy = y2 - y1;
